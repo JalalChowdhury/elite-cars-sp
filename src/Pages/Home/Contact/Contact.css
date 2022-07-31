@@ -1,0 +1,123 @@
+.form-container {
+    width: 90%;
+    margin: auto;
+    overflow: hidden;
+  }
+  
+  #contact-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)),
+      url(../../../Images/contact-bg.jpg);
+    background-size: cover;
+    min-height: 75vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 50px;
+  }
+  
+  #contact-section .form-container h2 {
+    text-align: center;
+    text-decoration: underline;
+    text-underline-position: under;
+    color: rgb(238, 235, 235);
+    letter-spacing: 2px;
+  }
+  
+  #contact-section .form-container p {
+    text-align: center;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 3%;
+    color: #fff;
+    letter-spacing: 3px;
+  }
+  
+  .contactForm i.fa {
+    font-size: 22px;
+    padding: 3%;
+    background-color: none;
+    border-radius: 80%;
+    margin: 2%;
+    cursor: pointer;
+    border: 2px solid rgb(190, 190, 190);
+    color: rgb(190, 190, 190);
+  }
+  
+  .contactForm i.fa:hover {
+    cursor: pointer;
+    border: 2px solid white;
+    color: white;
+  }
+  
+  .contactForm {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+  
+  .form-info {
+    font-size: 16px;
+    font-style: italic;
+    color: white;
+    letter-spacing: 2px;
+  }
+  .form-fields input {
+    padding: 10px;
+    margin: 10px;
+    width: 70%;
+    background-color: rgba(136, 133, 133, 0.5);
+    color: white;
+    border: none;
+    outline: none;
+  }
+  
+  .form-fields input::placeholder {
+    color: white;
+  }
+  
+  .form-fields textarea {
+    padding: 10px;
+    margin: 10px;
+    width: 70%;
+    background-color: rgba(136, 133, 133, 0.5);
+    color: white;
+    border: none;
+    outline: none;
+  }
+  .form-fields textarea::placeholder {
+    color: white;
+  }
+  
+  .submit {
+    width: 40%;
+    background: none;
+    padding: 4px;
+    outline: none;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    height: 33px;
+    text-align: center;
+    cursor: pointer;
+    letter-spacing: 2px;
+    margin-left: 3%;
+    border: 2px solid rgb(190, 190, 190);
+    color: rgb(190, 190, 190);
+  }
+  
+  .submit:hover {
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    #contact-section .contactForm {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    #contact-section .submit {
+      width: 60%;
+    }
+  }

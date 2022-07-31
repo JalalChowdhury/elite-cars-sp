@@ -1,0 +1,8 @@
+.productCard:hover{
+    border: 1px solid rgb(60, 236, 228);
+}
+
+.product-btn{
+    background-color: rgb(60, 236, 228);
+    color: white;
+}

@@ -1,0 +1,17 @@
+
+.imgage-design{
+    margin-bottom: 100px;
+}
+.orderImg{
+    height: 600px;
+}
+
+
+@media only screen and (max-width: 688px) {
+        
+    .orderImg{
+        height: 250px;
+    }
+    
+
+}

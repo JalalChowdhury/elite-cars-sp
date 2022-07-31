@@ -1,0 +1,25 @@
+.footer-container{
+    background-color: #f0f8ff;
+    color: black;
+}
+
+.social-icon{
+    font-size: 25px;
+    margin: 5px;
+    margin-top: -5px;
+}
+.add-btn{
+    background-color: #00bcd4;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 16px;
+}
+.add-btn:hover{
+    background-color: #9ce0dd ;
+   
+}

@@ -1,0 +1,16 @@
+.feedbacks{
+    background-color: #F0F8FF;
+    padding: 30px;
+    position: relative;
+}
+
+.feedbacksContent{
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+.Apply {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
