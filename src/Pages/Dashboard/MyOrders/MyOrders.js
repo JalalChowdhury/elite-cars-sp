@@ -23,7 +23,7 @@ const MyOrders = () => {
         }
         else {
             console.log("data from supabase", orders);
-            setOrders(orders[0]);
+            setOrders(orders);
         }
     };
 

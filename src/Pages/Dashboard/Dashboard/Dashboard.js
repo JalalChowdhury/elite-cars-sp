@@ -70,7 +70,7 @@ function Dashboard(props) {
 
             {/* <Link to={`${url}`} style={{ textDecoration: 'none', color: 'blue' }}><Button color="inherit">Dashboard</Button></Link> */}
             {
-                1==2 ? <Box>
+                1==1 ? <Box>
 
                     <Box sx={{
                         display: 'flex',

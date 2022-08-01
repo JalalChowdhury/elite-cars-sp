@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import "./Contact.css";
 import Fade from "react-reveal/Fade";
+import { supabase } from "../../../DB/supabaseClient";
 
 const Contact = () => {
 
@@ -9,33 +10,26 @@ const Contact = () => {
   const subjectRef = useRef();
   const descriptionRef = useRef();
 
-  const handleContactForm = e => {
+  const handleContactForm = async (e) => {
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const subject = subjectRef.current.value;
     const description = descriptionRef.current.value;
 
-    const contactUser = { name, email, subject, description,messageDate: new Date().toDateString('dd/mm/yyyy') };
-
-    // send to the server
-    fetch('https://enigmatic-citadel-92082.herokuapp.com/contact', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(contactUser)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.insertedId) {
-
-          alert("Your message send Successfully.As soon as,we will contact with you");
-          e.target.reset();
-
-        }
-      });
+    const contactUser = { name, email, subject, description, messageDate: new Date().toDateString('dd/mm/yyyy') };
 
     e.preventDefault();
+    let { data, error } = await supabase
+      .from("contact")
+      .insert(contactUser)
+      .single();
+    if (error) {
+      console.log(error);
+    }
+    else {
+      alert("Your message send Successfully.As soon as,we will contact with you");
+      e.target.reset();
+    }
   }
 
 

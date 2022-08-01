@@ -13,7 +13,7 @@ const ManageContact = () => {
         let { data: manageContact, error } = await supabase
             .from("contact")
             .select("*")
-            .order("id", { ascending: false });
+            .order("id", { ascending: true });
         if (error) {
             console.log("error", error);
         }
