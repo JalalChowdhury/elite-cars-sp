@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, updateProfile, getIdToken, signOut } from "firebase/auth";
 import initializeFirebase from '../Pages/Login/Firebase/firebase.initialize';
+import { supabase } from '../DB/supabaseClient';
 
 
 // initialize firebase app
@@ -11,7 +12,7 @@ const useFirebase = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState('');
     const [admin, setAdmin] = useState(false);
-    
+
 
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
@@ -24,7 +25,7 @@ const useFirebase = () => {
                 const newUser = { email, displayName: name };
                 setUser(newUser);
                 // save user to the database
-                saveUser(email, name, 'POST');
+                saveUser(email, name);
 
                 // send name to firebase after creation
                 updateProfile(auth.currentUser, {
@@ -61,7 +62,7 @@ const useFirebase = () => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
-                saveUser(user.email, user.displayName, 'PUT');
+                saveUser(user.email, user.displayName);
                 setAuthError('');
                 const destination = location?.state?.from || '/';
                 history.replace(destination);
@@ -75,7 +76,7 @@ const useFirebase = () => {
         const unsubscribed = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
-               
+
             } else {
                 setUser({})
             }
@@ -84,11 +85,36 @@ const useFirebase = () => {
         return () => unsubscribed;
     }, [auth])
 
+    // try no.-1
+    // useEffect(() => {
+    //     fetch(`https://enigmatic-citadel-92082.herokuapp.com/users/${user.email}`)
+    //         .then(res => res.json())
+    //         .then(data => setAdmin(data.admin))
+    // }, [user.email])
+
+    // try no.-1-->Sol
+    const fetchAdmin = async () => {
+        let { data, error } = await supabase
+            .from("users")
+            .select("*")
+            .eq('email', user.email)
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            if (data.length >= 1) {
+                setAdmin(true);
+            }
+            console.log("data from supabase", admin);
+
+        }
+    };
     useEffect(() => {
-        fetch(`https://enigmatic-citadel-92082.herokuapp.com/users/${user.email}`)
-            .then(res => res.json())
-            .then(data => setAdmin(data.admin))
+        fetchAdmin();
     }, [user.email])
+
+
+
 
     const logout = () => {
         setIsLoading(true);
@@ -100,17 +126,29 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }
 
-    const saveUser = (email, displayName, method) => {
+    // try no.-2
+    const saveUser = async (email, displayName) => {
         const user = { email, displayName };
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/users', {
-            method: method,
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then()
+        let { data, error } = await supabase
+            .from("users")
+            .insert(user)
+            .single();
+        if (error) {
+            console.log(error);
+        }
+        else {
+            alert("Login Successfully");
+        }
+        // fetch('https://enigmatic-citadel-92082.herokuapp.com/users', {
+        //     method: method,
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(user)
+        // })
+        //     .then()
     }
+    // try no.-1-->Sol
 
     return {
         user,

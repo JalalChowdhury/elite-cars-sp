@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import Fade from "react-reveal/Fade";
+import { supabase } from '../../../DB/supabaseClient';
 // import useAuth from '../../../hook/useAuth';
 
 const ManageProducts = () => {
@@ -10,10 +11,23 @@ const ManageProducts = () => {
 
     let index = 1;
 
+    // fetch data in Supabase
+    const fetchManageProducts = async () => {
+        let { data: manageProducts, error } = await supabase
+            .from("products")
+            .select("*")
+            .order("id", { ascending: false });
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            console.log("data from supabase", manageProducts);
+            setManageProducts(manageProducts);
+        }
+    };
+
     useEffect(() => {
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/products')
-            .then(res => res.json())
-            .then(data => setManageProducts(data))
+        fetchManageProducts();
     }, [])
 
     //for cancel products using fetch api
@@ -25,7 +39,7 @@ const ManageProducts = () => {
             .then(result => {
                 console.log(result);
                 if (result) {
-                    const newOrders = manageProducts.filter(order => order._id !== id);
+                    const newOrders = manageProducts.filter(order => order.id !== id);
                     setManageProducts(newOrders)
                 }
             })
@@ -58,7 +72,7 @@ const ManageProducts = () => {
                                         <td>{product.price}</td>
                                         <td>{product.modelYear}</td>
                                         <td>{product.status}</td>
-                                        <td><Button onClick={() => handleProductCancel(product._id)} variant='danger'>Delete Product</Button></td>
+                                        <td><Button onClick={() => handleProductCancel(product.id)} variant='danger'>Delete Product</Button></td>
 
                                     </tr>
                                 )

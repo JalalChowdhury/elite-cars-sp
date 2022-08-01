@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Dropdown, DropdownButton, Table } from 'react-bootstrap';
 import Fade from "react-reveal/Fade";
+import { supabase } from '../../../DB/supabaseClient';
 const ManageAllOrders = () => {
 
     const [ordersData, setOrdersData] = useState([]);
 
+    // supabase Query
+    const fetchAllOrders = async () => {
+        let { data: ordersData, error } = await supabase
+            .from("orders")
+            .select("*")
+            .order("id", { ascending: false });
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            console.log("data from supabase", ordersData);
+            setOrdersData(ordersData);
+        }
+    };
 
     useEffect(() => {
-
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/orders')
-            .then(res => res.json())
-            .then(data => {
-                setOrdersData(data);
-
-            })
-
+        fetchAllOrders();
     }, [])
 
     // handle 
@@ -34,7 +42,7 @@ const ManageAllOrders = () => {
                     const newOrders = [...ordersData];
 
                     newOrders.forEach(order => {
-                        if (order._id === id) {
+                        if (order.id === id) {
                             order.status = status;
                         }
                     })
@@ -88,9 +96,9 @@ const ManageAllOrders = () => {
                                         <td>{order.status}</td>
                                         <td>
                                             <DropdownButton id="dropdown-basic-button" alignRight variant='info' title="Update Status" >
-                                                <Dropdown.Item onClick={() => handleStatusUpdate(order._id, "PENDING")} >Pending</Dropdown.Item>
-                                                <Dropdown.Item onClick={() => handleStatusUpdate(order._id, "REJECTED")} >Rejected</Dropdown.Item>
-                                                <Dropdown.Item onClick={() => handleStatusUpdate(order._id, "SHIPPED")} >Shipped</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleStatusUpdate(order.id, "PENDING")} >Pending</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleStatusUpdate(order.id, "REJECTED")} >Rejected</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleStatusUpdate(order.id, "SHIPPED")} >Shipped</Dropdown.Item>
                                             </DropdownButton>
                                         </td>
 

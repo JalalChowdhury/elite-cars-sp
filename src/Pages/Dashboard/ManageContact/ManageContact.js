@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 import Fade from "react-reveal/Fade";
+import { supabase } from '../../../DB/supabaseClient';
 
 const ManageContact = () => {
 
@@ -8,10 +9,22 @@ const ManageContact = () => {
 
     let index = 1;
 
+    const fetchContacts = async () => {
+        let { data: manageContact, error } = await supabase
+            .from("contact")
+            .select("*")
+            .order("id", { ascending: false });
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            console.log("data from supabase", manageContact);
+            setManageContact(manageContact);
+        }
+    };
+
     useEffect(() => {
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/contact')
-            .then(res => res.json())
-            .then(data => setManageContact(data))
+        fetchContacts();
     }, [])
 
     return (

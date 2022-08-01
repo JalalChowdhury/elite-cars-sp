@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Carousel from "react-elastic-carousel";
 
 import Fade from "react-reveal/Fade";
+import { supabase } from "../../../DB/supabaseClient";
 import ReviewInfo from "../ReviewInfo/ReviewInfo";
 
 import './UserReviews.css';
@@ -9,13 +10,21 @@ import './UserReviews.css';
 const UserReviews = () => {
   const [feedbacks, setFeedbacks] = useState([]);
 
+  const fetchReviews = async () => {
+    let { data: feedbacks, error } = await supabase
+      .from("reviews")
+      .select("*")
+      .order("id", { ascending: false });
+    if (error) {
+      console.log("error", error);
+    }
+    else {
+      console.log("data from supabase", feedbacks);
+      setFeedbacks(feedbacks);
+    }
+  };
   useEffect(() => {
-    fetch("https://enigmatic-citadel-92082.herokuapp.com/reviews")
-      .then((res) => res.json())
-      .then((data) => {
-        setFeedbacks(data);
-        // setSpinner(false);
-      });
+    fetchReviews();
   }, []);
   //   console.log(feedbacks)
 
@@ -29,16 +38,16 @@ const UserReviews = () => {
   return (
     <div className="feedbacks">
       <div className="feedbacksContent">
-      <Fade bottom duration={2500}>
-        <h1 style={{ textAlign: "center", marginBottom: "20px" }}>What people are saying about Car Galleria</h1>
-        <div className="Apply">
-          <Carousel breakPoints={breakPoints}>
-            {feedbacks.map((feedback) => {
-              return <ReviewInfo feedback={feedback}></ReviewInfo>;
-            })}
-          </Carousel>
-        </div>
-      </Fade>
+        <Fade bottom duration={2500}>
+          <h1 style={{ textAlign: "center", marginBottom: "20px" }}>What people are saying about Car Galleria</h1>
+          <div className="Apply">
+            <Carousel breakPoints={breakPoints}>
+              {feedbacks.map((feedback) => {
+                return <ReviewInfo feedback={feedback}></ReviewInfo>;
+              })}
+            </Carousel>
+          </div>
+        </Fade>
       </div>
     </div>
   );

@@ -11,8 +11,8 @@ import './ProductCard.css';
 const ProductCard = (props) => {
 
 
-    const { _id, name, description, img } = props.product;
-    const productDetailURL = `/product/${_id}`;
+    const { id, name, description, img } = props.product;
+    const productDetailURL = `/product/${id}`;
 
 
     return (

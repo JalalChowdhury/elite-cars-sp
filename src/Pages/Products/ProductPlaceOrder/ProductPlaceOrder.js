@@ -11,23 +11,36 @@ import { Box } from '@mui/system';
 import './ProductPlaceOrder.css';
 import OrderPlaceModal from '../OrderPlaceModal/OrderPlaceModal';
 import { Link } from 'react-router-dom';
+import { supabase } from '../../../DB/supabaseClient';
 
 const ProductPlaceOrder = () => {
     const { productId } = useParams();
-    const [product, setProduct] = useState({});
+    console.log("id  ",productId);
 
     // for modal update 
     const [openBooking, setOpenBooking] = React.useState(false);
     const handleBookingOpen = () => setOpenBooking(true);
     const handleBookingClose = () => setOpenBooking(false);
 
+    const [product, setProduct] = useState({});
+
+    const fetchProducts = async () => {
+        let { data: product, error } = await supabase
+            .from("products")
+            .select("*")
+            // .order("productId", { ascending: false });
+            .eq('id',productId)
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            console.log("data from supabase", product);
+            setProduct(product[0]);
+        }
+    };
+
     useEffect(() => {
-
-        const url = `https://enigmatic-citadel-92082.herokuapp.com/products/${productId}`;
-
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setProduct(data))
+        fetchProducts();
 
     }, [])
     return (

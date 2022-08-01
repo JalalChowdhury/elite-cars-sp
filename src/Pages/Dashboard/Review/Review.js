@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 // import { Box } from '@mui/system';
 import React, { useRef } from 'react';
 import Fade from "react-reveal/Fade";
+import { supabase } from '../../../DB/supabaseClient';
 import useAuth from '../../../hook/useAuth';
 
 import './Review.css';
@@ -18,7 +19,7 @@ const Review = () => {
 
 
 
-    const handleReviewSubmit = e => {
+    const handleReviewSubmit = async (e) => {
         const address = addressRef.current.value;
         const rating = ratingRef.current.value;
         const description = descriptionRef.current.value;
@@ -27,23 +28,34 @@ const Review = () => {
         console.log(review);
 
         // send to the server
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/reviews', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(review)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
+        // fetch('https://enigmatic-citadel-92082.herokuapp.com/reviews', {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(review)
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         if (data.insertedId) {
 
-                    alert("Successfully added Your feedback");
-                    e.target.reset();
+        //             alert("Successfully added Your feedback");
+        //             e.target.reset();
 
-                }
-            });
+        //         }
+        //     });
         e.preventDefault();
+        let { data, error } = await supabase
+            .from("reviews")
+            .insert(review)
+            .single();
+        if (error) {
+            console.log(error);
+        }
+        else {
+            alert("Successfully added Your feedback");
+            e.target.reset();
+        }
     }
     return (
 

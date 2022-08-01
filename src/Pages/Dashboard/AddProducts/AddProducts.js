@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Button, TextField } from '@mui/material';
+import { supabase } from '../../../DB/supabaseClient';
 
 const AddProducts = () => {
 
@@ -15,7 +16,7 @@ const AddProducts = () => {
     const modelYearRef = useRef();
     const descriptionRef = useRef();
 
-    const handleBookingSubmit = e => {
+    const handleBookingSubmit = async (e) => {
 
         const name = nameRef.current.value;
         const img = imgRef.current.value;
@@ -28,29 +29,40 @@ const AddProducts = () => {
         // console.log("add product des ame", description);
 
         // send to the server
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/products', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(newUser)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
+        // fetch('https://enigmatic-citadel-92082.herokuapp.com/products', {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(newUser)
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         if (data.insertedId) {
 
-                    alert("Successfully added the Product");
-                    e.target.reset();
+        //             alert("Successfully added the Product");
+        //             e.target.reset();
 
-                }
-            });
+        //         }
+        //     });
         e.preventDefault();
+        let { data, error } = await supabase
+            .from("products")
+            .insert(newUser)
+            .single();
+        if (error) {
+            console.log(error);
+        }
+        else {
+            alert("Successfully added the Product");
+            e.target.reset();
+        }
     }
 
     return (
         <div>
-            <Box style={{ textAlign: 'center' ,backgroundColor: '#f4f4f4',padding:'20px 5px'}}>
-                <Typography id="transition-modal-title" variant="h4" component="div" sx={{weight:'700px',color:'#1976d2' ,m:3,borderRadius:4}}>
+            <Box style={{ textAlign: 'center', backgroundColor: '#f4f4f4', padding: '20px 5px' }}>
+                <Typography id="transition-modal-title" variant="h4" component="div" sx={{ weight: '700px', color: '#1976d2', m: 3, borderRadius: 4 }}>
                     Add Products
                 </Typography>
                 <form onSubmit={handleBookingSubmit}>
@@ -87,7 +99,7 @@ const AddProducts = () => {
                         size="small"
                     />
                     <TextField
-
+                        type="text-area"
                         sx={{ width: '60%', m: 1 }}
                         id="demo-helper-text-misaligned-no-helper"
                         label="Description"
@@ -96,7 +108,7 @@ const AddProducts = () => {
                     />
                     <br />
 
-                    <Button type="Submit" style={{width:'200px'}} variant="contained">Submit</Button>
+                    <Button type="Submit" style={{ width: '200px' }} variant="contained">Submit</Button>
 
                 </form>
             </Box>

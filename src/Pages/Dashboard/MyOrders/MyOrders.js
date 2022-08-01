@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import Fade from "react-reveal/Fade";
+import { supabase } from '../../../DB/supabaseClient';
 import useAuth from '../../../hook/useAuth';
 
 
@@ -12,10 +13,25 @@ const MyOrders = () => {
 
     let index = 1;
 
+    const fetchOrders = async () => {
+        let { data: orders, error } = await supabase
+            .from("orders")
+            .select("*")
+            .eq('email',user.email)
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            console.log("data from supabase", orders);
+            setOrders(orders[0]);
+        }
+    };
+
     useEffect(() => {
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/userOrders?email=' + user.email)
-            .then(res => res.json())
-            .then(data => setOrders(data))
+        fetchOrders();
+        // fetch('https://enigmatic-citadel-92082.herokuapp.com/userOrders?email=' + user.email)
+        //     .then(res => res.json())
+        //     .then(data => setOrders(data))
     }, [user.email])
 
     //for cancel products using fetch api
@@ -27,7 +43,7 @@ const MyOrders = () => {
             .then(result => {
                 console.log(result);
                 if (result) {
-                    const newOrders = orders.filter(order => order._id !== id);
+                    const newOrders = orders.filter(order => order.id !== id);
                     setOrders(newOrders)
                 }
             })
@@ -61,7 +77,7 @@ const MyOrders = () => {
                                         <td>{order.price}</td>
                                         <td>{order.bookingDate}</td>
                                         <td>{order.status}</td>
-                                        <td><Button onClick={() => handleOrderCancel(order._id)} variant='danger'>Cancel Order</Button></td>
+                                        <td><Button onClick={() => handleOrderCancel(order.id)} variant='danger'>Cancel Order</Button></td>
 
                                     </tr>
                                 )

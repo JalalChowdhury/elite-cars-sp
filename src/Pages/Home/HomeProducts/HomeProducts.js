@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { Container, Typography } from '@mui/material';
 import ProductCard from '../../Shared/ProductCard/ProductCard';
+import { supabase } from '../../../DB/supabaseClient';
 
 
 
@@ -12,11 +13,22 @@ const HomeProducts = () => {
     // all services 
     const [products, setProducts] = useState([]);
 
-    useEffect(() => {
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/products')
-            .then(res => res.json())
-            .then(data => setProducts(data))
+    const fetchProducts = async () => {
+        let { data: products, error } = await supabase
+            .from("products")
+            .select("*")
+            .order("id", { ascending: false });
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            console.log("data from supabase", products);
+            setProducts(products);
+        }
+    };
 
+    useEffect(() => {
+        fetchProducts();
     }, [])
 
 
@@ -35,7 +47,7 @@ const HomeProducts = () => {
                         {
                             topProducts.map((product) =>
                                 <ProductCard
-                                    key={product._id}
+                                    key={product.id}
                                     product={product}
                                 ></ProductCard>)
                         }
