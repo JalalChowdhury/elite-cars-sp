@@ -27,31 +27,52 @@ const ManageAllOrders = () => {
 
     // handle 
 
-    const handleStatusUpdate = (id, status) => {
-        fetch(`https://enigmatic-citadel-92082.herokuapp.com/updateOrderStatus`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                orderId: id,
-                status: status
-            })
-        })
-            .then(res => res.json())
-            .then(result => {
-                if (result) {
-                    const newOrders = [...ordersData];
+    const handleStatusUpdate = async (id, status) => {
+        const { data, error } = await supabase
+            .from('orders')
+            .update({ status: status })
+            .eq("id", id)
 
-                    newOrders.forEach(order => {
-                        if (order.id === id) {
-                            order.status = status;
-                        }
-                    })
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            const newOrders = [...ordersData];
 
-                    setOrdersData(newOrders);
-
+            newOrders.forEach(order => {
+                if (order.id === id) {
+                    order.status = status;
                 }
-
             })
+
+            setOrdersData(newOrders);
+
+
+        }
+        // fetch(`https://enigmatic-citadel-92082.herokuapp.com/updateOrderStatus`, {
+        //     method: 'PATCH',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({
+        //         orderId: id,
+        //         status: status
+        //     })
+        // })
+        //     .then(res => res.json())
+        //     .then(result => {
+        //         if (result) {
+        //             const newOrders = [...ordersData];
+
+        //             newOrders.forEach(order => {
+        //                 if (order.id === id) {
+        //                     order.status = status;
+        //                 }
+        //             })
+
+        //             setOrdersData(newOrders);
+
+        //         }
+
+        //     })
     }
 
 

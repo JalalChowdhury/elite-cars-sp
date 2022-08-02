@@ -31,19 +31,18 @@ const ManageProducts = () => {
     }, [])
 
     //for cancel products using fetch api
-    const handleProductCancel = id => {
-        fetch(`https://enigmatic-citadel-92082.herokuapp.com/cancelProduct/${id}`, {
-            method: "DELETE"
-        })
-            .then(res => res.json())
-            .then(result => {
-                console.log(result);
-                if (result) {
-                    const newOrders = manageProducts.filter(order => order.id !== id);
-                    setManageProducts(newOrders)
-                }
-            })
-        alert("Are You Sure delete this Product?")
+    const handleProductCancel =async id => {
+        try {
+            await supabase
+                .from("products")
+                .delete()
+                .eq("id", id);
+
+                setManageProducts(manageProducts.filter((x) => x.id !== id));
+        } catch (error) {
+            console.log("error", error);
+        }
+      
     }
 
     return (

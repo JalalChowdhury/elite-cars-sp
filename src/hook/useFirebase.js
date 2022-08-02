@@ -97,11 +97,15 @@ const useFirebase = () => {
         let { data, error } = await supabase
             .from("users")
             .select("*")
-            .eq('email', user.email)
+            .match({
+                email:loginUser.email,
+                role: "admin"
+            })
         if (error) {
             console.log("error", error);
         }
         else {
+            console.log(data);
             if (data.length >= 1) {
                 setAdmin(true);
             }
