@@ -14,6 +14,7 @@ const useFirebase = () => {
     const [admin, setAdmin] = useState(false);
 
 
+
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
@@ -56,13 +57,49 @@ const useFirebase = () => {
             })
             .finally(() => setIsLoading(false));
     }
+    const checkUserAbailability = async (email) => {
+        console.log("ck email ", email);
+        let { data, error } = await supabase
+            .from("users")
+            .select("*")
+            .eq('email', email)
+        if (error) {
+            console.log("error", error);
+        }
+        else {
+            console.log("data from supabase", data);
+            if (data.length === 0) {
+                return false;
+            }
+            else return true;
 
+        }
+    }
     const signInWithGoogle = (location, history) => {
         setIsLoading(true);
         signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-                saveUser(user.email, user.displayName);
+            .then(async (result) => {
+
+                console.log("result : ", result);
+                const userData = result.user;
+                let { data, error } = await supabase
+                    .from("users")
+                    .select("*")
+                    .eq('email', userData.email)
+                if (error) {
+                    console.log("error", error);
+                }
+                else {
+                    console.log("data from supabase", data);
+                    if (data.length === 0) {
+                        saveUser(userData.email, userData.displayName);
+                    }
+                   
+                }
+                //   if(checkUserAbailability(userData.email)===false){
+                //     saveUser(userData.email, userData.displayName);
+                //   }
+                console.log("ck avail ", checkUserAbailability(userData.email));
                 setAuthError('');
                 const destination = location?.state?.from || '/';
                 history.replace(destination);
@@ -98,7 +135,7 @@ const useFirebase = () => {
             .from("users")
             .select("*")
             .match({
-                email:loginUser.email,
+                email: user.email,
                 role: "admin"
             })
         if (error) {
@@ -109,7 +146,10 @@ const useFirebase = () => {
             if (data.length >= 1) {
                 setAdmin(true);
             }
-            console.log("data from supabase", admin);
+            else{
+                setAdmin(false)
+            }
+            console.log("Check Admin", admin);
 
         }
     };
