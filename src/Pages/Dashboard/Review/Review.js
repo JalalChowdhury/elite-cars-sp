@@ -26,24 +26,6 @@ const Review = () => {
 
         const review = { name: user.displayName, address, rating, description };
         console.log(review);
-
-        // send to the server
-        // fetch('https://enigmatic-citadel-92082.herokuapp.com/reviews', {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(review)
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         if (data.insertedId) {
-
-        //             alert("Successfully added Your feedback");
-        //             e.target.reset();
-
-        //         }
-        //     });
         e.preventDefault();
         let { data, error } = await supabase
             .from("reviews")

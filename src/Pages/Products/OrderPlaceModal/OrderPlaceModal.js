@@ -7,6 +7,7 @@ import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import { Button, TextField } from '@mui/material';
 import useAuth from '../../../hook/useAuth';
+import { supabase } from '../../../DB/supabaseClient';
 
 
 const style = {
@@ -24,40 +25,35 @@ const style = {
 
 const OrderPlaceModal = ({ product, openBooking, handleBookingClose }) => {
 
-    
+
 
     const { user } = useAuth();
-    
-    const handleBookingSubmit = e => {
+
+    const handleBookingSubmit = async e => {
         // collect data
         const orderPlace = {
-           
-            carModel : product.name,
-            price : product.price,
+
+            carModel: product.name,
+            price: product.price,
             buyerName: user.displayName,
             email: user.email,
             status: "PENDING",
             bookingDate: new Date().toDateString('dd/mm/yyyy')
         }
-        // send to the server
-        fetch('https://enigmatic-citadel-92082.herokuapp.com/orders', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(orderPlace)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
 
-                    // from availbale appointment
-                    // setBookingSuccess(true);
-                    handleBookingClose();
-                }
-            });
 
         e.preventDefault();
+        let { data, error } = await supabase
+            .from("orders")
+            .insert(orderPlace)
+            .single();
+        if (error) {
+            console.log(error);
+        }
+        else {
+            alert("Successfully added the Product");
+            e.target.reset();
+        }
 
 
         alert("Order Place Successfully Completed.")
@@ -91,12 +87,12 @@ const OrderPlaceModal = ({ product, openBooking, handleBookingClose }) => {
                             size="small"
                         />
                         <TextField
-                             disabled
+                            disabled
                             sx={{ width: '90%', m: 1 }}
                             id="outlined-helperText"
                             label="Name"
                             defaultValue={user.displayName}
-                           
+
                             size="small"
                         />
                         <TextField

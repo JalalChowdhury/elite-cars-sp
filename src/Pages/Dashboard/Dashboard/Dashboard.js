@@ -83,7 +83,7 @@ function Dashboard(props) {
                         <br />
                     </Box>
 
-                    <Box sx={{
+                    {/* <Box sx={{
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -91,7 +91,7 @@ function Dashboard(props) {
                     }}>
                         <i class="fas fa-user-shield"></i> <Link to={`${url}/makeAdmin`} style={{ textDecoration: 'none', color: 'navy' }}><Button color="inherit">Make Admin</Button></Link>
                         <br />
-                    </Box>
+                    </Box> */}
 
 
                     <Box sx={{

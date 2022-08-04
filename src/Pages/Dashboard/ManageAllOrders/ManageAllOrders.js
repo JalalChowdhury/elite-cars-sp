@@ -49,30 +49,7 @@ const ManageAllOrders = () => {
 
 
         }
-        // fetch(`https://enigmatic-citadel-92082.herokuapp.com/updateOrderStatus`, {
-        //     method: 'PATCH',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //         orderId: id,
-        //         status: status
-        //     })
-        // })
-        //     .then(res => res.json())
-        //     .then(result => {
-        //         if (result) {
-        //             const newOrders = [...ordersData];
-
-        //             newOrders.forEach(order => {
-        //                 if (order.id === id) {
-        //                     order.status = status;
-        //                 }
-        //             })
-
-        //             setOrdersData(newOrders);
-
-        //         }
-
-        //     })
+        
     }
 
 

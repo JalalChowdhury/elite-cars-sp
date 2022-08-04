@@ -121,14 +121,6 @@ const useFirebase = () => {
         });
         return () => unsubscribed;
     }, [auth])
-
-    // try no.-1
-    // useEffect(() => {
-    //     fetch(`https://enigmatic-citadel-92082.herokuapp.com/users/${user.email}`)
-    //         .then(res => res.json())
-    //         .then(data => setAdmin(data.admin))
-    // }, [user.email])
-
     // try no.-1-->Sol
     const fetchAdmin = async () => {
         let { data, error } = await supabase
@@ -183,14 +175,6 @@ const useFirebase = () => {
         else {
             alert("Login Successfully");
         }
-        // fetch('https://enigmatic-citadel-92082.herokuapp.com/users', {
-        //     method: method,
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(user)
-        // })
-        //     .then()
     }
     // try no.-1-->Sol
 

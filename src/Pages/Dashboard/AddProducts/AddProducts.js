@@ -28,23 +28,6 @@ const AddProducts = () => {
         // console.log("add product n ame", name);
         // console.log("add product des ame", description);
 
-        // send to the server
-        // fetch('https://enigmatic-citadel-92082.herokuapp.com/products', {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(newUser)
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         if (data.insertedId) {
-
-        //             alert("Successfully added the Product");
-        //             e.target.reset();
-
-        //         }
-        //     });
         e.preventDefault();
         let { data, error } = await supabase
             .from("products")

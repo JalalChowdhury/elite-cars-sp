@@ -29,9 +29,6 @@ const MyOrders = () => {
 
     useEffect(() => {
         fetchOrders();
-        // fetch('https://enigmatic-citadel-92082.herokuapp.com/userOrders?email=' + user.email)
-        //     .then(res => res.json())
-        //     .then(data => setOrders(data))
     }, [user.email])
 
     //for cancel products using fetch api

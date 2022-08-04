@@ -20,6 +20,7 @@ const ManageContact = () => {
         else {
             console.log("data from supabase", manageContact);
             setManageContact(manageContact);
+            // alert("We will try to contact as soon possible.")
         }
     };
 

@@ -15,27 +15,12 @@ const MakeAdmin = () => {
 
     const handleAdminSubmit =async (e) => {
         const user = { email };
-        // fetch('https://enigmatic-citadel-92082.herokuapp.com/users/admin', {
-        //     method: 'PUT',
-        //     headers: {
-        //         // 'authorization': `Bearer ${token}`,
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(user)
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         if (data.modifiedCount) {
-        //             console.log(data);
-        //             // setEmail('');
-        //             setSuccess(true);
-        //         }
-        //     })
+        
         e.preventDefault();
         let { data, error } = await supabase
             .from("users")
             .update(user)
-            .single();
+            .eq('email',email)
         if (error) {
             console.log(error);
         }

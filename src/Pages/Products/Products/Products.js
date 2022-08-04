@@ -15,16 +15,6 @@ import { supabase } from '../../../DB/supabaseClient';
 
 
 const Products = () => {
-
-    // all services 
-    // const [products, setProducts] = useState([]);
-
-    // useEffect(() => {
-    //     fetch('https://enigmatic-citadel-92082.herokuapp.com/products')
-    //         .then(res => res.json())
-    //         .then(data => setProducts(data))
-
-    // }, [])
     const [products, setProducts] = useState([]);
 
     const fetchProducts = async () => {
