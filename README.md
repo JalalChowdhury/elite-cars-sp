@@ -18,5 +18,5 @@ Car Galleria is a car showcase platform where people find  car and buy there cho
     </ul>
 
 <h2>Technology Used</h2>
-  HTML5 , CSS3, JS , React.JS,React-Bootstrap,react-reveal , Material UI, React Route ,node.js , express.js, mongodb , heroku, Firebase
+  HTML5 , CSS3, JS , React.JS,React-Bootstrap,react-reveal , Material UI, React Route ,Supabase, Firebase
 
