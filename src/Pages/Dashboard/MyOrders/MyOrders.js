@@ -32,14 +32,14 @@ const MyOrders = () => {
     }, [user.email])
 
     //for cancel products using fetch api
-    const handleOrderCancel = id => {
+    const handleOrderCancel = async id => {
         try {
             await supabase
-                .from("products")
+                .from("orders")
                 .delete()
                 .eq("id", id);
 
-                setManageProducts(setOrders.filter((x) => x.id !== id));
+                setOrders(orders.filter((x) => x.id !== id));
         } catch (error) {
             console.log("error", error);
         }
