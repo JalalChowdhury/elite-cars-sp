@@ -33,17 +33,16 @@ const MyOrders = () => {
 
     //for cancel products using fetch api
     const handleOrderCancel = id => {
-        fetch(`https://enigmatic-citadel-92082.herokuapp.com/cancelOrder/${id}`, {
-            method: "DELETE"
-        })
-            .then(res => res.json())
-            .then(result => {
-                console.log(result);
-                if (result) {
-                    const newOrders = orders.filter(order => order.id !== id);
-                    setOrders(newOrders)
-                }
-            })
+        try {
+            await supabase
+                .from("products")
+                .delete()
+                .eq("id", id);
+
+                setManageProducts(setOrders.filter((x) => x.id !== id));
+        } catch (error) {
+            console.log("error", error);
+        }
         alert("Are You Sure delete this Order?")
     }
 

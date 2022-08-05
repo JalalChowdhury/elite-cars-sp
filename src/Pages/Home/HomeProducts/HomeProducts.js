@@ -17,7 +17,7 @@ const HomeProducts = () => {
         let { data: products, error } = await supabase
             .from("products")
             .select("*")
-            .order("id", { ascending: false });
+            .order("id", { ascending: true });
         if (error) {
             console.log("error", error);
         }
