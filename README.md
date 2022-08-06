@@ -1,6 +1,6 @@
 <h1>Car Galleria</h1>
 
-Car Galleria is a car showcase platform where people find  car and buy there choose car.
+Elite cars is a car showcase platform where people find  car and buy there choose car.
 
 
 

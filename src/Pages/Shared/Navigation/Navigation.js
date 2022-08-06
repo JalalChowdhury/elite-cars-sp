@@ -26,7 +26,7 @@ const Navigation = () => {
         >
           <Navbar.Brand>
             <h3 className="fs-4 fw-bold header-text text-uppercase">
-              Car_Galleria
+             Elite_cars
             </h3>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

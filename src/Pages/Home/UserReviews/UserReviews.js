@@ -39,7 +39,7 @@ const UserReviews = () => {
     <div className="feedbacks">
       <div className="feedbacksContent">
         <Fade bottom duration={2500}>
-          <h1 style={{ textAlign: "center", marginBottom: "20px" }}>What people are saying about Car Galleria</h1>
+          <h1 style={{ textAlign: "center", marginBottom: "20px" }}>What people are saying about Elite cars</h1>
           <div className="Apply">
             <Carousel breakPoints={breakPoints}>
               {feedbacks.map((feedback) => {

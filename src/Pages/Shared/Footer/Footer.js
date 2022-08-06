@@ -14,7 +14,7 @@ const Footer = () => {
                 <Container>
                     <div className="subscribe d-flex justify-content-center">
                         <div>
-                            <h2 className="mt-4 mr-5 text-center">Car Galleria of Update, Tips & Special Offers</h2>
+                            <h2 className="mt-4 mr-5 text-center">Elite cars of Update, Tips & Special Offers</h2>
                             <h3 className="mt-1 mr-5 text-center">Subscribe to Our Newsletter</h3>
                             <p className="text-center mr-2"><small>No spam message from us, only give you latest offer which is best for you and your business</small></p>
                             <div className="input-group mb-3">
@@ -30,7 +30,7 @@ const Footer = () => {
                         <div className="col-md-2 ml-1">
                             <h3 className=""> Contact US</h3>
                             <p> <small> <i className="fas fa-map-marker"></i> 29 Amborkana ,Sylhet BD </small> </p>
-                            <p> <small> <i className="fas fa-envelope-square"></i> CarGalleria7@gmail.com </small> </p>
+                            <p> <small> <i className="fas fa-envelope-square"></i> Elitecars7@gmail.com </small> </p>
                             <p> <small>  <i className="fas fa-phone-square-alt"></i> +880 1320-456789 </small> </p>
 
                         </div>
@@ -71,7 +71,7 @@ const Footer = () => {
                         <a target="_blank" rel="noopener noreferrer" href="//www.linkedin.com" > <FontAwesomeIcon className='text-black social-icon' icon={faLinkedin} /></a>
                     </div>
 
-                    <p className="text-center text-black mt-2 ">Copyright ©  Car Galleria. All rights reserved. </p>
+                    <p className="text-center text-black mt-2 ">Copyright ©  Elite cars. All rights reserved. </p>
                 </Container>
             </section>
 
